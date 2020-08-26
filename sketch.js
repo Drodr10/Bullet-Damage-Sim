@@ -9,7 +9,7 @@ function setup() {
   weight = random(30,52);
   thickness = random(22, 83)
 
-  bullet = createSprite(50, 200, 30, 20);
+  bullet = createSprite(50, 200, 40, 20);
   bullet.velocityX = speed;
   bullet.shapeColor = "white";
 
@@ -26,15 +26,24 @@ function setup() {
 function draw() {
   background(0);  
 
-  
-  if(bullet.isTouching(wall)){
+  if(hasCollided(bullet,wall)){
     if(damage < 10){
       wall.shapeColor = "green";
     }
     else{
       wall.shapeColor = "red";
     }
-    bullet.collide(wall);
   }
+  bullet.collide(wall);
   drawSprites();
+}
+
+function hasCollided(bullet1, wall1){
+
+  bulletRightEdge = bullet1.width/2 +bullet1.x;
+  wallLeftEdge = wall1.x-wall.width/2;
+  if(bulletRightEdge >= wallLeftEdge){
+    return true;
+  }
+  return false;
 }
